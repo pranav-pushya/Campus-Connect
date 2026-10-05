@@ -31,12 +31,12 @@ Planned features (checked off as they are merged to `main`):
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | HTML, CSS, JavaScript |
-| Backend | Python, FastAPI |
-| Database | SQLite |
-| Version Control | Git, GitHub |
+| Layer           | Technology            |
+| --------------- | --------------------- |
+| Frontend        | HTML, CSS, JavaScript |
+| Backend         | Python, FastAPI       |
+| Database        | SQLite                |
+| Version Control | Git, GitHub           |
 
 ## Project Structure
 
@@ -75,12 +75,13 @@ campusconnect/
 > ⚠️ Setup steps below are the planned workflow. They will be verified and finalized once the backend is merged.
 
 1. Clone the repository
+
    ```bash
    git clone <repo-url>
    cd campusconnect
    ```
-
 2. Create and activate a virtual environment
+
    ```bash
    python -m venv venv
    # Windows
@@ -88,41 +89,40 @@ campusconnect/
    # macOS / Linux
    source venv/bin/activate
    ```
-
 3. Install dependencies
+
    ```bash
    pip install -r requirements.txt
    ```
-
 4. Start the server
+
    ```bash
    uvicorn app.main:app --reload
    ```
-
 5. Open `http://127.0.0.1:8000` in your browser.
    API docs are available at `http://127.0.0.1:8000/docs`.
 
 ## API Overview
 
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/register` | Create a new student account |
-| POST | `/api/login` | Log in and receive a token |
-| GET | `/api/me` | Logged-in student's profile |
-| GET | `/api/categories` | List issue categories |
-| GET | `/api/issues` | List all issues |
-| POST | `/api/issues` | Create a new issue |
-| GET | `/api/issues/{id}` | Get issue details |
-| PATCH | `/api/issues/{id}/status` | Update issue status |
-| GET | `/api/stats` | Issue counts by status |
+| Method | Endpoint                    | Description                  |
+| ------ | --------------------------- | ---------------------------- |
+| POST   | `/api/register`           | Create a new student account |
+| POST   | `/api/login`              | Log in and receive a token   |
+| GET    | `/api/me`                 | Logged-in student's profile  |
+| GET    | `/api/categories`         | List issue categories        |
+| GET    | `/api/issues`             | List all issues              |
+| POST   | `/api/issues`             | Create a new issue           |
+| GET    | `/api/issues/{id}`        | Get issue details            |
+| PATCH  | `/api/issues/{id}/status` | Update issue status          |
+| GET    | `/api/stats`              | Issue counts by status       |
 
 ## Team
 
-| Name | Role |
-|---|---|
-| Pranav | Team Lead, Backend Core, Issues API |
-| Gavesh | Authentication, Profile |
-| _Name_ | Frontend UI |
+| Name     | Role                                    |
+| -------- | --------------------------------------- |
+| Pranav   | Team Lead, Backend Core, Issues API     |
+| Gavesh   | Authentication, Profile                 |
+| _Name_ | Frontend UI                             |
 | _Name_ | Status Workflow, Testing, Documentation |
 
 ## Contributing (Team Workflow)
