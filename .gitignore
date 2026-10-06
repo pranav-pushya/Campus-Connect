@@ -39,6 +39,10 @@ venv.bak/
 .env.*
 !.env.example
 
+# Screenshots & media
+Screenshot*.png
+*.png
+
 # IDE & OS files
 .vscode/
 .idea/
