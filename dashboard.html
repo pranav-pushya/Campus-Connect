@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusConnect - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body> 
+    <!--Navigation bar -->  
+    <nav class="navbar">
+        <div class="logo"> CampusConnect</div>
+        <div class="navlinks">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="create.html">Report an issue</a>
+        <a href="profile.html">Profile</a>
+          </div>
+    </nav>
+    <main class="box">
+        <section class="page-header">
+
+            <div>
+                <h1>Campus Issues</h1>
+                  <p>View and track reported campus issues.</p>
+                     </div>
+
+
+            <a href="create.html" class="button primary-button">Report an Issue</a>
+        </section>
+        <!--issue statistics-->
+        <section class="statistics">
+             <div id="openb" class="stats">
+
+                <h3 >Open</h3>
+                <p id="openCount">0</p>
+                 </div>
+            <div id="progressb" class="stats">
+
+                <h3 >In Progress</h3>
+                <p id="inProgressCount">0</p>
+            </div>
+            <div id="resolvedb" class="stats">
+                <h3>Resolved</h3>
+                <p id="resolvedCount">0</p>
+            </div>
+        </section>
+        <section class="filters">
+            <div class="filter-group">
+                <!--different issue categories-->
+                <label for="categories">Category</label>
+                <select id="categories">
+                    <option value="">All Categories</option>
+                    <option value="Classroom">Classroom</option>
+                    <option value="Campus">Campus</option>
+                    <option value="Lost&Found">Lost & Found</option>
+                    <option value="Digital IT Services"> Digital IT Services</option>
+                    <option value="General">General</option>
+                </select>
+            </div>
+            <!--issue status-->
+            <div class="filter-group">
+                <label for="statusFilter">Status</label>
+                <select id="statusFilter">
+                    <option value="">All Statuses</option>
+                    <option value="Open">Open</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Resolved">Resolved</option>
+                </select>
+
+            </div>
+        </section>
+    </main>
+    <script src="dashboard.js"></script>
+</body>
+</html>

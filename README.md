@@ -123,7 +123,7 @@ campusconnect/
 | Pranav   | Team Lead, Backend Core, Issues API     |
 | Gavesh   | Authentication, Profile                 |
 | Akshita  | Frontend UI                             |
-| Aastha | Status Workflow, Testing, Documentation |
+| Aastha   | Status Workflow, Testing, Documentation |
 
 ## Contributing (Team Workflow)
 

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusConnect - Issue Details</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+    <!--navigation bar-->
+    <nav class="navbar">
+        <div class="logo">CampusConnect</div>
+        <div class="navlinks">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="create.html">Report an Issue</a>
+            <a href="profile.html">Profile</a>
+        </div>
+
+    </nav>
+<!--issue details page-->
+    <main class="box">
+        <a href="dashboard.html" class="back-button"> ← Back to Dashboard</a>
+        <p id="loadingMessage" class="message"> Loading issue...</p>
+        <p id="errorMessage" class="message error-message hidden"></p>
+
+        <section id="issueDetails" class="issue-details hidden">
+            <div class="issue-details-header">
+                <div>
+                    <h1 id="issueTitle">Power Sockets not working</h1>
+                    <span id="issueCategory" class="category-badge">Classroom</span>
+                </div>
+               <span id="issueStatus" class="status-badge">Open</span>
+            </div>
+            <div class="issue-description">
+                <h2>Description</h2>
+                <p id="issueDescription">Many power sockets of Room 509 are not working.Please inspect and repair as soon as possible.</p>                  
+            </div>
+            <div class="issue-info">
+                <div>
+                    <strong> Created By</strong>
+                      <p id="createdBy"> Student</p>
+                </div>
+                <div>
+                    <strong>Created At</strong>
+                    <p id="createdAt">6 October 2026</p>
+                </div>
+             </div>
+            <section class="status-section">
+
+                <h2>
+                    Update Status
+                </h2>
+                   <form id="statusForm">
+                   <div class="form-group">
+
+                        <label for="status"> Status</label>
+                        <select id="status" name="status">
+
+                            <option value="Open">Open</option>
+                            <option value="In Progress"> In Progress</option>
+
+                            <option value="Resolved">Resolved</option>
+                        </select>
+                    </div>
+                    <p id="statusError" class="message error-message hidden"></p>
+                    <p id="statusSuccess" class="message success-message hidden"></p>
+            
+                    <button type="submit" class="button primary-button">Update Status</button>
+                </form>
+            </section>
+        </section>
+    </main>
+
+<script src="issue.js"></script>
+</body>
+
+</html>
