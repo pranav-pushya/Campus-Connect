@@ -33,9 +33,6 @@ class LoginRequest(BaseModel):
 
 # --- 2. API ENDPOINTS ---
 
-# Notice karo maine "/api/register" ki jagah sirf "/register" likha hai 
-# kyunki upar prefix="/api" set hai.
-
 @router.post("/register", status_code=status.HTTP_201_CREATED)
 def register_user(user_data: RegisterRequest):
     # TODO: Aage yahan SQLite insert aur password hash aayega

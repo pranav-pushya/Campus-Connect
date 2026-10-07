@@ -5,6 +5,7 @@ class User(BaseModel):
     id: int
     name: str
     email: str
+    created_at: str
 
 # 2. The Stub Guard 
 def get_current_user() -> User:
@@ -13,5 +14,6 @@ def get_current_user() -> User:
     return User(
         id=1,
         name="Test User",
-        email="test@campusconnect.com"
+        email="test@campusconnect.com",
+        created_at="01/01/2026"
     )
