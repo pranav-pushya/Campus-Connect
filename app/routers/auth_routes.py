@@ -8,8 +8,11 @@ Endpoints to be implemented by M2:
 - GET  /api/me
 """
 
-from fastapi import APIRouter, status
+import sqlite3
+from fastapi import APIRouter, status, Depends, HTTPException
 from pydantic import BaseModel, EmailStr
+from app.database import get_db
+from app.auth import get_password_hash
 
 router = APIRouter(prefix="/api", tags=["Authentication"])
 
@@ -32,12 +35,27 @@ class LoginRequest(BaseModel):
 
 
 # --- 2. API ENDPOINTS ---
-
 @router.post("/register", status_code=status.HTTP_201_CREATED)
-def register_user(user_data: RegisterRequest):
-    # TODO: Aage yahan SQLite insert aur password hash aayega
+def register_user(user_data: RegisterRequest, db: sqlite3.Connection = Depends(get_db)):
+    hashed_pw = get_password_hash(user_data.password)
+    
+    cursor = db.cursor()
+    try:
+        cursor.execute(
+            "INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)",
+            (user_data.name, user_data.email, hashed_pw)
+        )
+        db.commit()
+        new_user_id = cursor.lastrowid 
+        
+    except sqlite3.IntegrityError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail="Email already registered"
+        )
+    
     return {
-        "id": 1,
+        "id": new_user_id,
         "name": user_data.name,
         "email": user_data.email
     }

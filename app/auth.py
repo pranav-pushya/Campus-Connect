@@ -1,3 +1,4 @@
+import bcrypt
 from pydantic import BaseModel
 
 # 1. Pydantic schema for user data
@@ -17,3 +18,10 @@ def get_current_user() -> User:
         email="test@campusconnect.com",
         created_at="01/01/2026"
     )
+
+# 3. Password Hashing Utility
+def get_password_hash(password: str) -> str:
+    pwd_bytes = password.encode('utf-8')
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(pwd_bytes, salt)
+    return hashed_password.decode('utf-8')
