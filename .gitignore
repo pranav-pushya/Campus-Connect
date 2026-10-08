@@ -38,10 +38,7 @@ venv.bak/
 .env
 .env.*
 !.env.example
-
-# Screenshots & media
-Screenshot*.png
-*.png
+.secret_key
 
 # IDE & OS files
 .vscode/
