@@ -1,78 +1,44 @@
-"""
-Authentication routes for CampusConnect.
-Owned by: M2 (Gavesh)
+""import sqlite3
 
-Endpoints to be implemented by M2:
-- POST /api/register
-- POST /api/login
-- GET  /api/me
-"""
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel, EmailStr, Field
 
-import sqlite3
-from fastapi import APIRouter, status, Depends, HTTPException
-from pydantic import BaseModel, EmailStr
+from app.auth import User, create_token, get_current_user, hash_password, verify_password
 from app.database import get_db
-from app.auth import get_password_hash
 
 router = APIRouter(prefix="/api", tags=["Authentication"])
 
-@router.get("/auth-health")
-def auth_health_check():
-    """Temporary test route to confirm auth router is connected."""
-    return {"status": "auth router ready"}
-
-
-# --- 1. PYDANTIC MODELS (Data Checkers) ---
-
 class RegisterRequest(BaseModel):
-    name: str
+    name: str = Field(min_length=1, max_length=100)
     email: EmailStr
-    password: str
+    password: str = Field(min_length=8, max_length=72)  # bcrypt 72 bytes se zyada nahi leta
 
 class LoginRequest(BaseModel):
     email: EmailStr
-    password: str
+    password: str = Field(max_length=72)
 
-
-# --- 2. API ENDPOINTS ---
-@router.post("/register", status_code=status.HTTP_201_CREATED)
-def register_user(user_data: RegisterRequest, db: sqlite3.Connection = Depends(get_db)):
-    hashed_pw = get_password_hash(user_data.password)
-    
-    cursor = db.cursor()
+@router.post("/register", status_code=201)
+def register(data: RegisterRequest, db=Depends(get_db)):
+    email = data.email.lower()
     try:
-        cursor.execute(
+        cur = db.execute(
             "INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)",
-            (user_data.name, user_data.email, hashed_pw)
+            (data.name.strip(), email, hash_password(data.password)),
         )
         db.commit()
-        new_user_id = cursor.lastrowid 
-        
     except sqlite3.IntegrityError:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST, 
-            detail="Email already registered"
-        )
-    
-    return {
-        "id": new_user_id,
-        "name": user_data.name,
-        "email": user_data.email
-    }
+        raise HTTPException(status_code=400, detail="Email already registered")
+    return {"id": cur.lastrowid, "name": data.name.strip(), "email": email}
 
-@router.post("/login", status_code=status.HTTP_200_OK)
-def login_user(user_data: LoginRequest):
-    # TODO: Aage yahan DB verification aur JWT banana aayega
-    return {
-        "access_token": "dummy_jwt_token_123"
-    }
+@router.post("/login")
+def login(data: LoginRequest, db=Depends(get_db)):
+    row = db.execute(
+        "SELECT id, password_hash FROM users WHERE email = ?", (data.email.lower(),)
+    ).fetchone()
+    if row is None or not verify_password(data.password, row["password_hash"]):
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+    return {"access_token": create_token(row["id"]), "token_type": "bearer"}
 
-@router.get("/me", status_code=status.HTTP_200_OK)
-def get_profile():
-    # TODO: Yahan par Depends(get_current_user) wala guard lagega
-    return {
-        "id": 1,
-        "name": "Test User",
-        "email": "test@campusconnect.com",
-        "created_at": "2026-10-08 10:00:00"
-    }
+@router.get("/me")
+def me(user: User = Depends(get_current_user)):
+    return user
