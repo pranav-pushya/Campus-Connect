@@ -4,7 +4,7 @@ from enum import Enum
 import sqlite3
 
 from app.database import get_db
-from app.auth import User, get_current_user
+from app.auth import get_current_user
 
 router = APIRouter(prefix="/api", tags=["Status & Stats"])
 
@@ -24,7 +24,7 @@ def update_issue_status(
     issue_id: int,
     status_data: StatusUpdate,
     db: sqlite3.Connection = Depends(get_db),
-    user: User = Depends(get_current_user),
+    user: dict = Depends(get_current_user)
 ):
     cursor = db.cursor()
 
@@ -56,7 +56,7 @@ def update_issue_status(
 @router.get("/stats")
 def get_stats(
     db: sqlite3.Connection = Depends(get_db),
-    user: User = Depends(get_current_user)
+    user: dict = Depends(get_current_user)
 ):
 
     cursor = db.cursor()
