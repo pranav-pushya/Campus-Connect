@@ -2,26 +2,66 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Register - CampusConnect</title>
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <div class="container">
-      <h2>Register</h2>
-      <form id="registerForm">
-        <input type="text" id="name" placeholder="Full Name" required />
-        <input type="email" id="email" placeholder="Email" required />
-        <input
-          type="password"
-          id="password"
-          placeholder="Password"
-          required
-          minlength="8"
-        />
-        <button type="submit" class="button primary-button">Register</button>
-      </form>
-      <p id="errorMsg" style="color: red"></p>
-      <p>Already have an account? <a href="/login.html">Login here</a></p>
+  <body class="auth-page">
+    <div class="auth-wrapper">
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="auth-logo-badge">🎓 CampusConnect</div>
+          <h2>Create Account</h2>
+          <p class="auth-subtitle">Join your fellow students on CampusConnect</p>
+        </div>
+
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="e.g. Alex Johnson"
+              required
+              autocomplete="name"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Campus Email</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="e.g. alex@campus.edu"
+              required
+              autocomplete="email"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Minimum 8 characters"
+              required
+              minlength="8"
+              autocomplete="new-password"
+            />
+            <span class="input-hint">Must be at least 8 characters</span>
+          </div>
+
+          <button type="submit" class="button primary-button auth-btn">
+            Create Account
+          </button>
+        </form>
+
+        <p id="errorMsg" class="auth-error"></p>
+
+        <div class="auth-footer">
+          <p>Already have an account? <a href="/login.html">Sign in here</a></p>
+        </div>
+      </div>
     </div>
     <script src="auth.js"></script>
   </body>
