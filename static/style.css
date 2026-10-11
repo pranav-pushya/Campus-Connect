@@ -458,3 +458,98 @@ border : 2px solid white;
     color: #166534;
 }
 
+
+/* Responsive layout for tablets and mobile screens */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 16px 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .navlinks {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .box {
+        padding: 25px 16px;
+    }
+
+    .page-header {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .statistics {
+        grid-template-columns: 1fr;
+    }
+
+    .filters {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .issue-details {
+        padding: 20px;
+    }
+
+    .issue-details-header {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .issue-info {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .form-section {
+        margin: 16px;
+        padding: 22px;
+    }
+
+    .issue-card-header,
+    .issue-card-footer {
+        flex-wrap: wrap;
+    }
+}
+
+/* Extra-small screens */
+@media (max-width: 375px) {
+    .logo {
+        font-size: 20px;
+    }
+
+    .navlinks {
+        gap: 10px;
+    }
+
+    .navlinks a {
+        font-size: 14px;
+    }
+
+    .page-header h1,
+    .issue-details-header h1 {
+        font-size: 25px;
+        overflow-wrap: anywhere;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions .button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .issue-card {
+        padding: 16px;
+    }
+}
+
