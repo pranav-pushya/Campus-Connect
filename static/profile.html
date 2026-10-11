@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Profile - CampusConnect</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <nav>
+      <a href="/dashboard.html">Dashboard</a>
+      <a href="/create.html">Report an issue</a>
+      <a href="/profile.html">Profile</a>
+      <button onclick="logout()">Logout</button>
+    </nav>
+    <div class="container">
+      <h2>Your Profile</h2>
+      <p><strong>Name:</strong> <span id="name"></span></p>
+      <p><strong>Email:</strong> <span id="email"></span></p>
+      <p><strong>Joined:</strong> <span id="joined"></span></p>
+    </div>
+    <script src="api.js"></script>
+    <script src="profile.js"></script>
+  </body>
+</html>
