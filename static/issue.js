@@ -6,8 +6,8 @@ const issues = [
         description:"Many power sockets of Room 509 are not working.Please inspect and repair as soon as possible.",
         category: "Classroom",
         status: "Open",
-        createdBy: "Student",
-        createdAt: "17 October 2026"
+        created_by_name: "Student",
+        created_at: "2026-10-04T10:00:00Z"
     },
     {
         id: 2,
@@ -15,17 +15,17 @@ const issues = [
         description:"Water cooler int Block T is not working properly and needs to be checked out and repaired.",
         category: "Campus",
         status: "In Progress",
-        createdBy: "Student",
-        createdAt: "10 October 2026"
+        created_by_name: "Student",
+        created_at: "2026-10-07T10:00:00Z"
     },
     {
         id: 3,
         title: "Lost ID Card",
         description:"A university ID card was found near the cafeteria.",
-        category: "Lost&Found",
+        category: "Lost & Found",
         status: "Open",
-        createdBy: "Student",
-        createdAt: "5 October 2026"
+        created_by_name: "Student",
+        created_at: "2026-10-02T10:00:00Z"
     },
     {
         id: 4,
@@ -33,8 +33,8 @@ const issues = [
         description:"Campus Wi-Fi is not connecting on multiple devices and the connection frequently disconnects.",
         category: "Digital IT Services",
         status: "In Progress",
-        createdBy: "Student",
-        createdAt: "5 October 2026"
+        created_by_name: "Student",
+        created_at: "2026-10-07T10:00:00Z"
     },
     {
         id: 5,
@@ -42,8 +42,8 @@ const issues = [
         description:"Benches in Room 501 are broken, benches need repair as soon as possible.",
         category: "Classroom",
         status: "Resolved",
-        createdBy: "Faculty",
-        createdAt: "4 October 2026"
+        created_by_name: "Faculty",
+        created_at: "2026-10-04T10:00:00Z"
     },
     {
         id: 6,
@@ -51,17 +51,17 @@ const issues = [
         description:"Washrooms need proper maintenance and cleaning to maintain hygine.",
         category: "Campus",
         status: "Resolved",
-        createdBy: "Student",
-        createdAt: "3 October 2026"
+        created_by_name: "Student",
+        created_at: "2026-10-03T10:00:00Z"
     },
     {
         id: 7,
         title: "Wallet found",
         description:"A black wallet was found near the sports complex.",
-        category: "Lost&Found",
+        category: "Lost & Found",
         status: "Open",
-        createdBy: "Student",
-        createdAt: "3 October 2026"
+        created_by_name: "Student",
+        created_at: "2026-10-05T10:00:00Z"
     },
     {
         id: 8,
@@ -69,8 +69,8 @@ const issues = [
         description:"Unable to log into the student portal.",
         category: "Digital IT Services",
         status: "Open",
-        createdBy: "Student",
-        createdAt: "2 October 2026"
+        created_by_name: "Student",
+        created_at: "2026-10-06T10:00:00Z"
     },
     {
         id: 9,
@@ -78,8 +78,8 @@ const issues = [
         description:"Number of notice boards should be increased in frequently used areas to increase awareness amongst students in the campus.",
         category: "General",
         status: "In Progress",
-        createdBy: "Student",
-        createdAt: "1 October 2026"
+        created_by_name: "Student",
+        created_at: "2026-10-04T10:00:00Z"
     }
 ];
 const urlParams = new URLSearchParams(window.location.search);
@@ -97,6 +97,10 @@ const issueStatus = document.getElementById("issueStatus");
 const issueDescription = document.getElementById("issueDescription");
 const createdBy = document.getElementById("createdBy");
 const createdAt = document.getElementById("createdAt");
+const statusSelect = document.getElementById("status");
+const statusForm = document.getElementById("statusForm");
+const statusError = document.getElementById("statusError");
+const statusSuccess = document.getElementById("statusSuccess");
 function updateStatusStyle(status) {
     issueStatus.classList.remove("status-open","status-progress","status-resolved");
     if (status === "Open") {
@@ -114,8 +118,9 @@ if (issue) {
     issueCategory.textContent = issue.category;
     issueStatus.textContent = issue.status;
     issueDescription.textContent = issue.description;
-    createdBy.textContent = issue.createdBy;
-    createdAt.textContent = issue.createdAt;
+    createdBy.textContent = issue.created_by_name;
+    createdAt.textContent = formatDate(issue.created_at);
+    statusSelect.value = issue.status;
     updateStatusStyle(issue.status);
     loadingMessage.classList.add("hidden");
     issueDetails.classList.remove("hidden");
@@ -124,4 +129,20 @@ else {
     loadingMessage.classList.add("hidden");
     errorMessage.textContent = "Issue not found.";
     errorMessage.classList.remove("hidden");
+}
+
+if (issue && statusForm) {
+    statusForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const newStatus = statusSelect.value;
+
+        issue.status = newStatus;
+        issueStatus.textContent = newStatus;
+        updateStatusStyle(newStatus);
+
+        statusError.classList.add("hidden");
+        statusSuccess.textContent = "Status updated successfully.";
+        statusSuccess.classList.remove("hidden");
+    });
 }

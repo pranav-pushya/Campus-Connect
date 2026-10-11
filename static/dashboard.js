@@ -5,8 +5,8 @@ const issues = [
         description:"Many power sockets of Room 509 are not working.Please inspect and repair as soon as possible.",
         category: "Classroom",
         status: "Open",
-        createdBy: "Student",
-        createdAt: "17 October 2026"
+        created_by_name : "Student",
+        created_at: "2026-10-04T10:00:00Z"
     },
     {
         id: 2,
@@ -14,17 +14,17 @@ const issues = [
         description:"Water cooler int Block T is not working properly and needs to be checked out and repaired.",
         category: "Campus",
         status: "In Progress",
-        createdBy: "Student",
-        createdAt: "10 October 2026"
+        created_by_name : "Student",
+        created_at: "2026-10-07T10:00:00Z"
     },
     {
         id: 3,
         title: "Lost ID Card",
         description:"A university ID card was found near the cafeteria.",
-        category: "Lost&Found",
+        category: "Lost & Found",
         status: "Open",
-        createdBy: "Student",
-        createdAt: "5 October 2026"
+        created_by_name : "Student",
+        created_at: "2026-10-02T10:00:00Z"
     },
     {
         id: 4,
@@ -32,8 +32,8 @@ const issues = [
         description:"Campus Wi-Fi is not connecting on multiple devices and the connection frequently disconnects.",
         category: "Digital IT Services",
         status: "In Progress",
-        createdBy: "Student",
-        createdAt: "5 October 2026"
+        created_by_name : "Student",
+        created_at: "2026-10-07T10:00:00Z"
     },
     {
         id: 5,
@@ -41,8 +41,8 @@ const issues = [
         description:"Benches in Room 501 are broken, benches need repair as soon as possible.",
         category: "Classroom",
         status: "Resolved",
-        createdBy: "Faculty",
-        createdAt: "4 October 2026"
+        created_by_name : "Faculty",
+        created_at: "2026-10-04T10:00:00Z"
     },
     {
         id: 6,
@@ -50,17 +50,17 @@ const issues = [
         description:"Washrooms need proper maintenance and cleaning to maintain hygine.",
         category: "Campus",
         status: "Resolved",
-        createdBy: "Student",
-        createdAt: "3 October 2026"
+        created_by_name : "Student",
+        created_at: "2026-10-03T10:00:00Z"
     },
     {
         id: 7,
         title: "Wallet found",
         description:"A black wallet was found near the sports complex.",
-        category: "Lost&Found",
+        category: "Lost & Found",
         status: "Open",
-        createdBy: "Student",
-        createdAt: "3 October 2026"
+        created_by_name : "Student",
+        created_at: "2026-10-05T10:00:00Z"
     },
     {
         id: 8,
@@ -68,8 +68,8 @@ const issues = [
         description:"Unable to log into the student portal.",
         category: "Digital IT Services",
         status: "Open",
-        createdBy: "Student",
-        createdAt: "2 October 2026"
+        created_by_name : "Student",
+        created_at: "2026-10-06T10:00:00Z"
     },
     {
         id: 9,
@@ -77,8 +77,8 @@ const issues = [
         description:"Number of notice boards should be increased in frequently used areas to increase awareness amongst students in the campus.",
         category: "General",
         status: "In Progress",
-        createdBy: "Student",
-        createdAt: "1 October 2026"
+        created_by_name: "Student",
+        created_at: "2026-10-04T10:00:00Z"
     }
 ];
 
@@ -110,6 +110,18 @@ function getStatusClass(status) {
     return "";
 }
 
+function el(tag, className, text) {
+    const node = document.createElement(tag);
+    if (className) {
+        node.className = className;
+    }
+    if (text !== undefined) {
+        node.textContent = text;
+    }
+    return node;
+}
+
+
 function updateStatistics(data) {
     let open = 0;
     let inProgress = 0;
@@ -131,60 +143,81 @@ function updateStatistics(data) {
 }
 
 function renderIssues(data) {
-    issuesContainer.innerHTML = "";    
+    issuesContainer.textContent = "";
     if (data.length === 0) {
-        issuesContainer.innerHTML = `
-            <p class="message">No issues found.</p>
-        `;
+        issuesContainer.appendChild(
+            el("p", "message", "No issues found.")
+        );
         return;
     }
+
     data.forEach(function(issue) {
-        const card =
-            document.createElement("div");
-        card.className =
-            "issue-card";
-        card.innerHTML = `
+        const card = el("div", "issue-card");
+        const header = el("div", "issue-card-header");
+        const left = el("div");
 
-            <div class="issue-card-header">
-                <div>
-                    <h3>${issue.title}</h3>
-                    <span class="category-badge">${issue.category}</span>
-                </div>
-                <span class="status-badge ${getStatusClass(issue.status)}">
-                    ${issue.status}
-                </span>
-            </div>
-            <p class="issue-card-description">${issue.description}</p>
+        left.append(
+            el("h3", "", issue.title),
+            el("span", "category-badge", issue.category)
+        );
 
+        header.append(
+            left,
+            el(
+                "span",
+                "status-badge " + getStatusClass(issue.status),
+                issue.status
+            )
+        );
+        const footer = el("div", "issue-card-footer");
 
-            <div class="issue-card-footer">
+        const date = el(
+            "span",
+            "",
+            formatDate(issue.created_at)
+        );
+        const link = el(
+            "a",
+            "button primary-button",
+            "View Details"
+        );
+        link.href = "issue.html?id=" + encodeURIComponent(issue.id);
 
-                <span> ${issue.createdAt}</span>
+        footer.append(date, link);
 
-                <a href="issue.html?id=${issue.id}" class="button primary-button">View Details</a>
-            </div>
-        `;
+        card.append(
+            header,
+            el(
+                "p",
+                "issue-card-description",
+                issue.description
+            ),
+            footer
+        );
         issuesContainer.appendChild(card);
     });
 }
-function filterIssues() {
-    const selectedCategory =
-        categories.value;
-    const selectedStatus =
-        statusFilter.value;
-    const filteredIssues =
-        issues.filter(function(issue) {
-            const categoryMatches =
-                selectedCategory === "" ||
-                issue.category === selectedCategory;
-            const statusMatches =
-                selectedStatus === "" ||
-                issue.status === selectedStatus;
-            return categoryMatches && statusMatches;
 
-        });
+
+function filterIssues() {
+    const selectedCategory = categories.value;
+    const selectedStatus = statusFilter.value;
+
+    const filteredIssues = issues.filter(function(issue) {
+        const categoryMatches =
+            selectedCategory === "" ||
+            issue.category === selectedCategory;
+
+        const statusMatches =
+            selectedStatus === "" ||
+            issue.status === selectedStatus;
+
+        return categoryMatches && statusMatches;
+    });
+
     renderIssues(filteredIssues);
 }
+
 categories.addEventListener(
     "change",
     filterIssues
