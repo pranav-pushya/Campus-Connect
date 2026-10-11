@@ -45,6 +45,8 @@ app.include_router(auth_routes.router)
 app.include_router(issues.router)
 app.include_router(status.router)
 
-# 2. Mount static frontend directory at "/"
-# Setting html=True automatically serves index.html for the root "/" URL
+# 2. Mount static frontend directory at both "/static" and "/"
+# This ensures URLs work seamlessly whether accessed via /dashboard.html or /static/dashboard.html
+app.mount("/static", StaticFiles(directory=STATIC_DIR, html=True), name="static_dir")
 app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
+
